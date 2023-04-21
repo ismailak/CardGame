@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UIItemsAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: abc3b3d46ffa740399719d74b8afb135, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3008931075fed4fd6813af92dd37a15c, type: 3}
+  - {fileID: 21300000, guid: 25c0993116e7541e79bff83aeacb619d, type: 3}
+  - {fileID: 21300000, guid: b226c281eb1b54a60bae275195e3c03b, type: 3}
+  - {fileID: 21300000, guid: 80f518e12ab2240ac8e9b659998541d8, type: 3}
+  - {fileID: 21300000, guid: b1f101a5d4b94416186ffc32a4fbab24, type: 3}
+  - {fileID: 21300000, guid: b4486319360204eae86ff87683bbe8eb, type: 3}
+  - {fileID: 21300000, guid: ad3adb39b66774354a33dabe62442d81, type: 3}
+  - {fileID: 21300000, guid: 3deaa88b63d4f4a569099039b71801ce, type: 3}
+  - {fileID: 21300000, guid: 74cfc1ac72fc94d8cb14cf3d104d9bc4, type: 3}
+  - {fileID: 21300000, guid: 2a415cce366df4ec7943d29ae553e4a8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - UI_icon_gold_pile
+  - ui_icon_render_cons_medkit_easter
+  - ui_icon_render_cons_healthshot_2
+  - ui_icon_render_cons_healthshot_2_adrenaline
+  - ui_icon_render_cons_grenade_snowball
+  - ui_icon_render_cons_grenade_m67
+  - ui_icon_render_t_cons_c4
+  - UI_icon_cash
+  - ui_icon_render_t_cons_grenade_emp
+  - ui_icon_render_cons_grenade_electric
+  m_RenderDataMap: {}
+  m_Tag: UIItemsAtlas
+  m_IsVariant: 0
