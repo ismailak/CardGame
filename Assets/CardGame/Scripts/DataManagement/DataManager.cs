@@ -7,13 +7,13 @@ namespace CardGame.Management
 {
     public class DataManager : MonoBehaviour
     {
-        private const string GAME_DATA_STRING = "game_data";
+        private const string GameDataString = "game_data";
 
         private GameData _gameData;
 
         public GameData GameData
         {
-            get => _gameData;
+            get { return _gameData; }
             private set
             {
                 _gameData = value;
@@ -24,8 +24,10 @@ namespace CardGame.Management
 
         private void Awake()
         {
-            if (PlayerPrefs.HasKey(GAME_DATA_STRING))
-                GameData = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(GAME_DATA_STRING));
+            if (PlayerPrefs.HasKey(GameDataString))
+            {
+                GameData = JsonUtility.FromJson<GameData>(PlayerPrefs.GetString(GameDataString));
+            }
             else
             {
                 GameData = new GameData(0, 0, 0, 0, 0,
@@ -35,7 +37,7 @@ namespace CardGame.Management
         }
 
 
-        public void SaveData() => PlayerPrefs.SetString(GAME_DATA_STRING, JsonUtility.ToJson(GameData));
+        public void SaveData() => PlayerPrefs.SetString(GameDataString, JsonUtility.ToJson(GameData));
     }
 
 

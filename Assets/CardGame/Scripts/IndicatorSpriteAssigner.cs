@@ -16,10 +16,19 @@ namespace CardGame
         [SerializeField] private Image _image;
 
 
-        public void SetBronze() => _image.sprite = _spriteAtlas.GetSprite(_bronzeSpriteName);
+        public void SetBronze()
+        {
+            _image.sprite = _spriteAtlas.GetSprite(_bronzeSpriteName);
+        }
 
-        public void SetSilver() => _image.sprite = _spriteAtlas.GetSprite(_silverSpriteName);
+        public void SetSilver()
+        {
+            _image.sprite = _spriteAtlas.GetSprite(_silverSpriteName);
+        }
 
-        public void SetGold() => _image.sprite = _spriteAtlas.GetSprite(_goldSpriteName);
+        public void SetGold()
+        {
+            _image.sprite = _spriteAtlas.GetSprite(_goldSpriteName);
+        }
     }
 }

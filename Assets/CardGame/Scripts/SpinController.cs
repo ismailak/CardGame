@@ -15,7 +15,8 @@ namespace CardGame
     {
         public event Action DidFinishedSpin;
 
-        [Header("Design")] private bool _isRandom = true;
+        [Header("Design")] 
+        private bool _isRandom = true;
         private int _spinSliceCount;
 
         [Header("Development")] [SerializeField]
@@ -39,7 +40,10 @@ namespace CardGame
 
         public void ResetSpinning()
         {
-            if (_wheelTransform) _wheelTransform.DOKill();
+            if (_wheelTransform)
+            {
+                _wheelTransform.DOKill();
+            }
         }
 
 
@@ -57,7 +61,10 @@ namespace CardGame
         {
             ChangeInteractable(false);
 
-            if (_isRandom) _spinSliceCount = Random.Range(15, 35);
+            if (_isRandom)
+            {
+                _spinSliceCount = Random.Range(15, 35);
+            }
 
             var targetZAngle = _spinSliceCount * 45;
 

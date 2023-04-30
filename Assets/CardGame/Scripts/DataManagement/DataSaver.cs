@@ -14,7 +14,10 @@ namespace CardGame.Management
         [SerializeField] private DataManager _dataManager;
 
 
-        private void Awake() => GetComponent<Button>().onClick.AddListener(SaveReward);
+        private void Awake()
+        {
+            GetComponent<Button>().onClick.AddListener(SaveReward);
+        }
 
 
         private void SaveReward()

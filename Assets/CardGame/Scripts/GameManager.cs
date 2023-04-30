@@ -22,10 +22,16 @@ namespace CardGame
         private int _level;
 
 
-        private void Awake() => _spinController.DidFinishedSpin += OnFinishedSpin;
+        private void Awake()
+        {
+            _spinController.DidFinishedSpin += OnFinishedSpin;
+        }
 
 
-        private void Start() => Set();
+        private void Start()
+        {
+            Set();
+        }
 
 
         private void Set()

@@ -13,7 +13,10 @@ namespace CardGame
 
         private Dictionary<RewardType, int> _rewards;
 
-        public Dictionary<RewardType, int> Rewards => _rewards;
+        public Dictionary<RewardType, int> Rewards
+        {
+            get { return _rewards; }
+        }
 
 
         private void Awake()

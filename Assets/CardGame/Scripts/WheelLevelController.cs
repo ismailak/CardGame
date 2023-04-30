@@ -23,7 +23,10 @@ namespace CardGame
         private Queue<LevelObject> _levelObjectsQueue;
 
 
-        private void Start() => Set();
+        private void Start()
+        {
+            Set();
+        }
 
 
         public void Set()

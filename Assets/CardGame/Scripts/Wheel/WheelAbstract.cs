@@ -12,15 +12,15 @@ namespace CardGame.Wheel
 {
     public abstract class WheelAbstract : MonoBehaviour
     {
-        [Header("Design")] [SerializeField] protected SliceOfWheelData[] _slicesOfWheelData;
+        [Header("Design")] 
+        [SerializeField] protected SliceOfWheelData[] _slicesOfWheelData;
 
         [SerializeField] private bool _isRandom = true;
 
 
 
-        [Header("Development")] [SerializeField]
-        private Image[] _sliceImages;
-
+        [Header("Development")] 
+        [SerializeField] private Image[] _sliceImages;
         [SerializeField] private TextMeshProUGUI[] _sliceTexts;
         [SerializeField] private SpriteAtlas _itemSpriteAtlas;
         [SerializeField] private SpriteAtlas _otherSpriteAtlas;
@@ -36,12 +36,18 @@ namespace CardGame.Wheel
         [SerializeField] private string _grenadeEmpSpriteName;
         [SerializeField] private string _deadSpriteName;
 
-        public SliceOfWheelData[] SlicesOfWheelData => _slicesOfWheelData;
+        public SliceOfWheelData[] SlicesOfWheelData
+        {
+            get { return _slicesOfWheelData; }
+        }
 
 
         public void SetWheel()
         {
-            if (_isRandom) SetRandomWheel();
+            if (_isRandom)
+            {
+                SetRandomWheel();
+            }
         }
 
 
@@ -51,7 +57,10 @@ namespace CardGame.Wheel
         }
 
 
-        private void OnValidate() => SetSliceVisuals();
+        private void OnValidate()
+        {
+            SetSliceVisuals();
+        }
 
 
         private void SetSliceVisuals()

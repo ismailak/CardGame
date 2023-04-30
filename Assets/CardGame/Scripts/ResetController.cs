@@ -13,7 +13,10 @@ namespace CardGame
         [SerializeField] private GameManager _gameManager;
 
 
-        private void Awake() => GetComponent<Button>().onClick.AddListener(ResetGame);
+        private void Awake()
+        {
+            GetComponent<Button>().onClick.AddListener(ResetGame);
+        }
 
 
         private void ResetGame()
