@@ -30,8 +30,7 @@ namespace CardGame.Management
             }
             else
             {
-                GameData = new GameData(0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0);
+                GameData = new GameData();
                 SaveData();
             }
         }
@@ -55,9 +54,9 @@ namespace CardGame.Management
         public int GrenadeEmpCount;
 
 
-        public GameData(int coinCount, int moneyCount, int grenadeElectricCount, int grenadeCount,
-            int grenadeSnowballCount,
-            int healthShotCount, int healthShotAdrenalineCount, int medKitCount, int c4Count, int grenadeEmpCount)
+        public GameData(int coinCount = 0, int moneyCount = 0, int grenadeElectricCount = 0, int grenadeCount = 0,
+            int grenadeSnowballCount = 0, int healthShotCount = 0, int healthShotAdrenalineCount = 0, 
+            int medKitCount = 0, int c4Count = 0, int grenadeEmpCount = 0)
         {
             CoinCount = coinCount;
             MoneyCount = moneyCount;
