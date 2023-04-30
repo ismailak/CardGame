@@ -14,12 +14,9 @@ namespace CardGame.Wheel
     {
         [Header("Design")] 
         [SerializeField] protected SliceOfWheelData[] _slicesOfWheelData;
-
         [SerializeField] private bool _isRandom = true;
-
-
-
-        [Header("Development")] 
+        
+        [Space, Header("Development")] 
         [SerializeField] private Image[] _sliceImages;
         [SerializeField] private TextMeshProUGUI[] _sliceTexts;
         [SerializeField] private SpriteAtlas _itemSpriteAtlas;

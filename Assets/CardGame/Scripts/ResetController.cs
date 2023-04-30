@@ -10,9 +10,6 @@ namespace CardGame
     [RequireComponent(typeof(Button))]
     public class ResetController : MonoBehaviour
     {
-        [SerializeField] private GameManager _gameManager;
-
-
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(ResetGame);
@@ -21,7 +18,7 @@ namespace CardGame
 
         private void ResetGame()
         {
-            _gameManager.ResetGame();
+            GameManager.Instance.ResetGame();
         }
     }
 }

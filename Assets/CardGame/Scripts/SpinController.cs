@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using CardGame.Wheel;
 using DG.Tweening;
 using UnityEngine;
@@ -11,7 +12,7 @@ using Random = UnityEngine.Random;
 namespace CardGame
 {
     [RequireComponent(typeof(Button))]
-    public class SpinController : MonoBehaviour
+    public class SpinController : MonoSingleton<SpinController>
     {
         public event Action DidFinishedSpin;
 
@@ -19,9 +20,7 @@ namespace CardGame
         private bool _isRandom = true;
         private int _spinSliceCount;
 
-        [Header("Development")] [SerializeField]
-        private RewardCounter _rewardCounter;
-
+        [Header("Development")]
         [SerializeField] private GameObject _deadPanel;
 
 
@@ -77,7 +76,7 @@ namespace CardGame
         {
             if (_wheel.SlicesOfWheelData[index].RewardType == RewardType.Dead) _deadPanel.SetActive(true);
 
-            _rewardCounter.AddReward(_wheel.SlicesOfWheelData[index].RewardType, _wheel.SlicesOfWheelData[index].Count);
+            RewardCounter.Instance.AddReward(_wheel.SlicesOfWheelData[index].RewardType, _wheel.SlicesOfWheelData[index].Count);
             DidFinishedSpin?.Invoke();
         }
     }

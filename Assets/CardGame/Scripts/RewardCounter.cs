@@ -1,16 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using UnityEngine;
 
 
 
 namespace CardGame
 {
-    public class RewardCounter : MonoBehaviour
+    public class RewardCounter : MonoSingleton<RewardCounter>
     {
-        [SerializeField] private LeftPanelController _leftPanelController;
-
         private Dictionary<RewardType, int> _rewards;
 
         public Dictionary<RewardType, int> Rewards
@@ -32,7 +31,7 @@ namespace CardGame
             for (var i = 0; i < (int) RewardType.NumberOfTypes; i++)
             {
                 _rewards.Add((RewardType) i, 0);
-                _leftPanelController.SetReward((RewardType) i, 0);
+                LeftPanelController.Instance.SetReward((RewardType) i, 0);
             }
         }
 
@@ -42,7 +41,7 @@ namespace CardGame
             if (rewardType == RewardType.Dead) return;
 
             _rewards[rewardType] += count;
-            _leftPanelController.SetReward(rewardType, _rewards[rewardType]);
+            LeftPanelController.Instance.SetReward(rewardType, _rewards[rewardType]);
         }
     }
 

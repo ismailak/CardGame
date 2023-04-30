@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using CardGame.Wheel;
 using DG.Tweening;
 using UnityEngine;
@@ -9,14 +10,11 @@ using UnityEngine.UI;
 
 namespace CardGame
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoSingleton<GameManager>
     {
         [SerializeField] private RectTransform _wheelPanelTransform;
         [SerializeField] private WheelAbstract _bronzeWheel, _silverWheel, _goldWheel;
-        [SerializeField] private SpinController _spinController;
-        [SerializeField] private WheelLevelController _wheelLevelController;
         [SerializeField] private IndicatorSpriteAssigner _indicatorSpriteAssigner;
-        [SerializeField] private RewardCounter _rewardCounter;
         [SerializeField] private GameObject _deadPanel;
 
         private int _level;
@@ -24,7 +22,7 @@ namespace CardGame
 
         private void Awake()
         {
-            _spinController.DidFinishedSpin += OnFinishedSpin;
+            SpinController.Instance.DidFinishedSpin += OnFinishedSpin;
         }
 
 
@@ -45,9 +43,9 @@ namespace CardGame
         public void ResetGame()
         {
             DOTween.KillAll();
-            _rewardCounter.SetRewardCounter();
-            _spinController.ResetSpinning();
-            _wheelLevelController.Set();
+            RewardCounter.Instance.SetRewardCounter();
+            SpinController.Instance.ResetSpinning();
+            WheelLevelController.Instance.Set();
             _deadPanel.SetActive(false);
             Set();
         }
@@ -71,9 +69,12 @@ namespace CardGame
             else _indicatorSpriteAssigner.SetGold();
 
             targetWheel.SetWheel();
-            _spinController.Init(targetWheel, targetWheel.transform);
+            SpinController.Instance.Init(targetWheel, targetWheel.transform);
 
-            _wheelPanelTransform.DOAnchorPosY(-13, 1).OnComplete(() => _spinController.ChangeInteractable(true));
+            _wheelPanelTransform.DOAnchorPosY(-13, 1).OnComplete(() =>
+            {
+                SpinController.Instance.ChangeInteractable(true);
+            });
         }
 
 
@@ -82,7 +83,7 @@ namespace CardGame
             _level++;
 
             _wheelPanelTransform.DOAnchorPosY(-500, 1).OnComplete(SetNewWheel).SetDelay(1f)
-                .OnStart(_wheelLevelController.LevelUp);
+                .OnStart(WheelLevelController.Instance.LevelUp);
         }
     }
 }

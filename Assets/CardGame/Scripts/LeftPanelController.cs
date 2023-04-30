@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using TMPro;
 using UnityEngine;
 
 
 namespace CardGame
 {
-    public class LeftPanelController : MonoBehaviour
+    public class LeftPanelController : MonoSingleton<LeftPanelController>
     {
         [SerializeField] private PanelTile _moneyTile;
         [SerializeField] private PanelTile _coinTile;

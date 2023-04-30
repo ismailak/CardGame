@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 
 namespace CardGame
 {
-    public class WheelLevelController : MonoBehaviour
+    public class WheelLevelController : MonoSingleton<WheelLevelController>
     {
         [SerializeField] private Transform _tileBackgroundsTransform, _tileLevelTextsTransform;
         [SerializeField] private List<LevelObject> _levelObjects;

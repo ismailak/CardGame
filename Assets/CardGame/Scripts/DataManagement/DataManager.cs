@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Tools;
 using UnityEngine;
 
 
 namespace CardGame.Management
 {
-    public class DataManager : MonoBehaviour
+    public class DataManager : MonoSingleton<DataManager>
     {
         private const string GameDataString = "game_data";
 
@@ -20,8 +21,7 @@ namespace CardGame.Management
                 SaveData();
             }
         }
-
-
+        
         private void Awake()
         {
             if (PlayerPrefs.HasKey(GameDataString))
@@ -34,8 +34,7 @@ namespace CardGame.Management
                 SaveData();
             }
         }
-
-
+        
         public void SaveData() => PlayerPrefs.SetString(GameDataString, JsonUtility.ToJson(GameData));
     }
 
