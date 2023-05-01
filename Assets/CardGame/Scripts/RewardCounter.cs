@@ -2,46 +2,81 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CardGame.Tools;
+using Pools;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.U2D;
+using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 
 namespace CardGame
 {
     public class RewardCounter : MonoSingleton<RewardCounter>
     {
-        private Dictionary<RewardType, int> _rewards;
+        [SerializeField] private PoolController _rewardItemPool;
+        [SerializeField] private RewardItemData _rewardItemDataPrefab;
+        
+        private Dictionary<int, RewardItemData> _collectedRewards;
 
-        public Dictionary<RewardType, int> Rewards
+        public Dictionary<int, RewardItemData> CollectedRewards
         {
-            get { return _rewards; }
+            get { return _collectedRewards; }
         }
 
-
-        private void Awake()
+        private void Start()
         {
-            SetRewardCounter();
+            Initialize();
         }
 
-
-        public void SetRewardCounter()
+        public void Initialize()
         {
-            _rewards = new Dictionary<RewardType, int>();
-
-            for (var i = 0; i < (int) RewardType.NumberOfTypes; i++)
+            if (_collectedRewards != null)
             {
-                _rewards.Add((RewardType) i, 0);
-                LeftPanelController.Instance.SetReward((RewardType) i, 0);
+                foreach (var key in _collectedRewards.Keys)
+                {
+                    _rewardItemPool.GiveToPool(_collectedRewards[key].RewardItemObject);
+                }
+            }
+            
+            _collectedRewards = new Dictionary<int, RewardItemData>();
+        }
+        
+        private void SetSprite(Image image, SpriteAtlas spriteAtlas, string spriteName)
+        {
+            image.sprite = spriteAtlas.GetSprite(spriteName);
+        }
+        
+        public void AddReward(RewardData rewardData)
+        {
+            var rewardId = rewardData.Id;
+            var increaseCount = rewardData.Count;
+            
+            if (_collectedRewards.ContainsKey(rewardId))
+            {
+                SetRewardCount(rewardId, _collectedRewards[rewardId].Count + increaseCount);
+            }
+            else
+            {
+                var rewardItemData = Instantiate(_rewardItemDataPrefab);
+                var rewardItem = _rewardItemPool.GetFromPool(transform);
+                SetSprite(rewardItem.GetComponent<Image>(), rewardData.SpriteAtlas, rewardData.SpriteName);
+                
+                rewardItemData.Initialize(rewardItem, rewardItem.GetComponentInChildren<TextMeshProUGUI>());
+                
+                _collectedRewards.Add(rewardId, rewardItemData);
+                
+                SetRewardCount(rewardId, increaseCount);
+                
+                _collectedRewards[rewardId].Count = increaseCount;
+                _collectedRewards[rewardId].RewardCountText.text = increaseCount.ToString();
             }
         }
 
-
-        public void AddReward(RewardType rewardType, int count)
+        private void SetRewardCount(int rewardId, int count)
         {
-            if (rewardType == RewardType.Dead) return;
-
-            _rewards[rewardType] += count;
-            LeftPanelController.Instance.SetReward(rewardType, _rewards[rewardType]);
+            _collectedRewards[rewardId].Count = count;
+            _collectedRewards[rewardId].RewardCountText.text = count.ToString();
         }
     }
 
