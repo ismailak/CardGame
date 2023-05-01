@@ -17,50 +17,12 @@ namespace CardGame.Management
         
         private void SaveReward()
         {
-            foreach (var reward in RewardCounter.Instance.Rewards)
+            foreach (var key in RewardCounter.Instance.CollectedRewards.Keys)
             {
-                switch (reward.Key)
-                {
-                    case RewardType.Coin:
-                        DataManager.Instance.GameData.CoinCount += reward.Value;
-                        break;
-                    case RewardType.Money:
-                        DataManager.Instance.GameData.MoneyCount += reward.Value;
-                        break;
-                    case RewardType.GrenadeElectric:
-                        DataManager.Instance.GameData.GrenadeElectricCount += reward.Value;
-                        break;
-                    case RewardType.Grenade:
-                        DataManager.Instance.GameData.GrenadeCount += reward.Value;
-                        break;
-                    case RewardType.GrenadeSnowball:
-                        DataManager.Instance.GameData.GrenadeSnowballCount += reward.Value;
-                        break;
-                    case RewardType.HealthShot:
-                        DataManager.Instance.GameData.HealthShotCount += reward.Value;
-                        break;
-                    case RewardType.HealthShotAdrenaline:
-                        DataManager.Instance.GameData.HealthShotAdrenalineCount += reward.Value;
-                        break;
-                    case RewardType.MedKit:
-                        DataManager.Instance.GameData.MedKitCount += reward.Value;
-                        break;
-                    case RewardType.C4:
-                        DataManager.Instance.GameData.C4Count += reward.Value;
-                        break;
-                    case RewardType.GrenadeEmp:
-                        DataManager.Instance.GameData.GrenadeEmpCount += reward.Value;
-                        break;
-                    case RewardType.NumberOfTypes:
-                        throw new ArgumentOutOfRangeException();
-                    case RewardType.Dead:
-                        throw new ArgumentOutOfRangeException();
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                var playerPrefKey = "reward_" + key;
+                PlayerPrefs.SetInt(playerPrefKey,
+                    PlayerPrefs.GetInt(playerPrefKey, 0) + RewardCounter.Instance.CollectedRewards.Count);
             }
-
-            DataManager.Instance.SaveData();
         }
     }
 }
