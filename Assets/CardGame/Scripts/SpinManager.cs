@@ -12,20 +12,19 @@ using Random = UnityEngine.Random;
 namespace CardGame
 {
     [RequireComponent(typeof(Button))]
-    public class SpinController : MonoSingleton<SpinController>
+    public class SpinManager : MonoSingleton<SpinManager>
     {
         public event Action DidFinishedSpin;
 
         [Header("Design")] 
-        private bool _isRandom = true;
-        private int _spinSliceCount;
+        [SerializeField] private bool _isSpinCountRandom = true;
+        [SerializeField] private int _spinCount;
+        [SerializeField] private int _deadRewardId;
 
-        [Header("Development")]
+        [Space, Header("Development")]
         [SerializeField] private GameObject _deadPanel;
-
-
-        private WheelAbstract _wheel;
-        private Transform _wheelTransform;
+        [SerializeField] private Transform _wheelTransform;
+        
         private float _sliceAngleInterval;
         private Button _button;
 
@@ -46,37 +45,32 @@ namespace CardGame
         }
 
 
-        public void ChangeInteractable(bool value) => _button.interactable = value;
-
-
-        public void Init(WheelAbstract wheel, Transform wheelTransform)
+        public void ChangeInteractable(bool value)
         {
-            _wheel = wheel;
-            _wheelTransform = wheelTransform;
+            _button.interactable = value;
         }
-
-
+        
         private void Spin()
         {
             ChangeInteractable(false);
 
-            if (_isRandom)
+            if (_isSpinCountRandom)
             {
-                _spinSliceCount = Random.Range(15, 35);
+                _spinCount = Random.Range(15, 35);
             }
 
-            var targetZAngle = _spinSliceCount * 45;
+            var targetZAngle = _spinCount * 45;
 
             _wheelTransform.DORotate(new Vector3(0, 0, targetZAngle), 3, RotateMode.FastBeyond360)
-                .OnComplete(() => FinishSpin(_spinSliceCount % 8));
+                .OnComplete(() => FinishSpin(_spinCount % 8));
         }
 
 
-        private void FinishSpin(int index)
+        private void FinishSpin(int rewardIndex)
         {
-            if (_wheel.SlicesOfWheelData[index].RewardType == RewardType.Dead) _deadPanel.SetActive(true);
+            if (WheelController.Instance.Rewards[rewardIndex].Id == _deadRewardId) _deadPanel.SetActive(true);
 
-            RewardCounter.Instance.AddReward(_wheel.SlicesOfWheelData[index].RewardType, _wheel.SlicesOfWheelData[index].Count);
+            RewardCounter.Instance.AddReward(WheelController.Instance.Rewards[rewardIndex]);
             DidFinishedSpin?.Invoke();
         }
     }
