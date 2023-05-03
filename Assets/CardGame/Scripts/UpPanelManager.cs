@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CardGame.Tools;
+using CardGame.Wheel;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,28 +12,30 @@ using UnityEngine.UI;
 
 namespace CardGame
 {
-    public class WheelLevelController : MonoSingleton<WheelLevelController>
+    public class UpPanelManager : MonoSingleton<UpPanelManager>
     {
+        private const float TileLength = 720;
+        private const float TilePieceInterval = 80;
+        private const float TileStartOffsetX = -320;
+        private const int TargetLevelOffset = 4;
+        
         [SerializeField] private Transform _tileBackgroundsTransform, _tileLevelTextsTransform;
         [SerializeField] private List<LevelObject> _levelObjects;
         [SerializeField] private SpriteAtlas _spriteAtlas;
         [SerializeField] private string _bronzeSpriteName;
         [SerializeField] private string _silverSpriteName;
         [SerializeField] private string _goldSpriteName;
+        [SerializeField] private WheelSettings _wheelSettings;
 
-        private int _index;
         private Queue<LevelObject> _levelObjectsQueue;
-
-
+        
         private void Start()
         {
-            Set();
+            Initialize();
         }
 
-
-        public void Set()
+        public void Initialize()
         {
-            _index = 0;
             _tileBackgroundsTransform.localPosition = Vector3.zero;
             _tileLevelTextsTransform.localPosition = Vector3.zero;
 
@@ -40,37 +43,37 @@ namespace CardGame
 
             for (var i = 0; i < _levelObjects.Count; i++)
             {
-                if (i == 8)
+                if (i == _levelObjects.Count - 1)
                     _levelObjects[i].TileBackgroundTransform.GetComponent<Image>().sprite =
                         _spriteAtlas.GetSprite(_silverSpriteName);
                 else
                     _levelObjects[i].TileBackgroundTransform.GetComponent<Image>().sprite =
                         _spriteAtlas.GetSprite(_bronzeSpriteName);
 
-                _levelObjects[i].TileBackgroundTransform.anchoredPosition = new Vector2(-320 + 80 * i, 0);
-                _levelObjects[i].TileLevelTransform.anchoredPosition = new Vector2(-320 + 80 * i, 0);
+                _levelObjects[i].TileBackgroundTransform.anchoredPosition = new Vector2(TileStartOffsetX + TilePieceInterval * i, 0);
+                _levelObjects[i].TileLevelTransform.anchoredPosition = new Vector2(TileStartOffsetX + TilePieceInterval * i, 0);
             }
 
-            for (var i = 0; i < 4; i++)
+            var halfOfLevelObjectCounts = _levelObjects.Count / 2;
+
+            for (var i = 0; i < halfOfLevelObjectCounts; i++)
             {
                 if (_levelObjects[i].TileLevelTransform.TryGetComponent(out TextMeshProUGUI text))
                     text.text = "";
             }
 
-            for (var i = 4; i < _levelObjects.Count; i++)
+            for (var i = halfOfLevelObjectCounts; i < _levelObjects.Count; i++)
             {
                 if (_levelObjects[i].TileLevelTransform.TryGetComponent(out TextMeshProUGUI text))
-                    text.text = (i - 3).ToString();
+                    text.text = (i - (halfOfLevelObjectCounts - 1)).ToString();
             }
         }
 
 
         public void LevelUp()
         {
-            _index++;
-
-            _tileBackgroundsTransform.DOLocalMoveX(_index * -80, 1);
-            _tileLevelTextsTransform.DOLocalMoveX(_index * -80, 1);
+            _tileBackgroundsTransform.DOLocalMoveX((GameManager.Instance.CurrentWheelLevel - 1) * -TilePieceInterval, 1);
+            _tileLevelTextsTransform.DOLocalMoveX((GameManager.Instance.CurrentWheelLevel - 1) * -TilePieceInterval, 1);
             CarryFirstLevelObjectToLast();
         }
 
@@ -79,19 +82,18 @@ namespace CardGame
         {
             var levelObject = _levelObjectsQueue.Dequeue();
 
-            var targetAnchoredPosition = levelObject.TileBackgroundTransform.anchoredPosition + Vector2.right * 720;
+            var targetAnchoredPosition = levelObject.TileBackgroundTransform.anchoredPosition + Vector2.right * TileLength;
             levelObject.TileBackgroundTransform.anchoredPosition = targetAnchoredPosition;
             levelObject.TileLevelTransform.anchoredPosition = targetAnchoredPosition;
 
-            var targetLevel = _index + 5;
+            var targetLevel = GameManager.Instance.CurrentWheelLevel + TargetLevelOffset;
 
             if (levelObject.TileLevelTransform.TryGetComponent(out TextMeshProUGUI text))
                 text.text = targetLevel.ToString();
 
             string spriteName;
-            if (targetLevel == 0) spriteName = _bronzeSpriteName;
-            else if (targetLevel % 30 == 0) spriteName = _goldSpriteName;
-            else if (targetLevel % 5 == 0) spriteName = _silverSpriteName;
+            if (targetLevel % _wheelSettings.GoldInterval == 0) spriteName = _goldSpriteName;
+            else if (targetLevel % _wheelSettings.SilverInterval == 0) spriteName = _silverSpriteName;
             else spriteName = _bronzeSpriteName;
 
             levelObject.TileBackgroundTransform.GetComponent<Image>().sprite = _spriteAtlas.GetSprite(spriteName);

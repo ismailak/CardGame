@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f58a359ae89c4a3fadfff0d5b2ad7c0, type: 3}
+  m_Name: BronzeWheelData3
+  m_EditorClassIdentifier: 
+  _rewards:
+  - {fileID: 11400000, guid: a555a88be36cb4cdfb66d9b8889c65e4, type: 2}
+  - {fileID: 11400000, guid: a555a88be36cb4cdfb66d9b8889c65e4, type: 2}
+  - {fileID: 11400000, guid: 1266c1e7199f6474f8b90d80ae6a5982, type: 2}
+  - {fileID: 11400000, guid: a555a88be36cb4cdfb66d9b8889c65e4, type: 2}
+  - {fileID: 11400000, guid: cff2f7d881b16493a85a1cc2033e6189, type: 2}
+  - {fileID: 11400000, guid: 288e0364c727b4b20bfbdfefab8d0947, type: 2}
+  - {fileID: 11400000, guid: 1266c1e7199f6474f8b90d80ae6a5982, type: 2}
+  - {fileID: 11400000, guid: 1266c1e7199f6474f8b90d80ae6a5982, type: 2}
+  _isShuffleRewards: 1
+  _wheelSpriteName: UI_spin_bronze_base
+  _indicatorSpriteName: UI_spin_bronze_indicator

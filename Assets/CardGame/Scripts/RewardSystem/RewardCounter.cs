@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.Pool.Pools;
 using CardGame.Tools;
-using Pools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -10,7 +10,7 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 
-namespace CardGame
+namespace CardGame.RewardSystem
 {
     public class RewardCounter : MonoSingleton<RewardCounter>
     {
@@ -78,21 +78,5 @@ namespace CardGame
             _collectedRewards[rewardId].Count = count;
             _collectedRewards[rewardId].RewardCountText.text = count.ToString();
         }
-    }
-
-    public enum RewardType
-    {
-        Coin,
-        Money,
-        GrenadeElectric,
-        Grenade,
-        GrenadeSnowball,
-        HealthShot,
-        HealthShotAdrenaline,
-        MedKit,
-        C4,
-        GrenadeEmp,
-        NumberOfTypes,
-        Dead
     }
 }

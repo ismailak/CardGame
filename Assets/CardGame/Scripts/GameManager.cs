@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.EventBusSystem;
+using CardGame.RewardSystem;
+using CardGame.SpinSystem.CardGame;
 using CardGame.Tools;
 using CardGame.Wheel;
 using DG.Tweening;
@@ -14,8 +17,9 @@ namespace CardGame
     {
         [SerializeField] private RectTransform _wheelPanelTransform;
         [SerializeField] private GameObject _deadPanel;
+        [SerializeField] private WheelSettings _wheelSettings;
 
-        private int _currentWheelLevel;
+        private int _currentWheelLevel = 1;
         public int CurrentWheelLevel
         {
             get { return _currentWheelLevel; }
@@ -24,7 +28,7 @@ namespace CardGame
 
         private void Awake()
         {
-            SpinManager.Instance.DidFinishedSpin += OnFinishedSpin;
+            GlobalBus.Sync.Subscribe<SpinFinishedEvent>(OnFinishedSpin);
         }
 
 
@@ -37,7 +41,7 @@ namespace CardGame
         private void Set()
         {
             _currentWheelLevel = 1;
-            _wheelPanelTransform.anchoredPosition = Vector2.down * 500;
+            _wheelPanelTransform.anchoredPosition = Vector2.up * _wheelSettings.YPositionForOutOfSight;
             WheelManager.Instance.SetNewWheel();
         }
 
@@ -47,18 +51,23 @@ namespace CardGame
             DOTween.KillAll();
             RewardCounter.Instance.Initialize();
             SpinManager.Instance.ResetSpinning();
-            WheelLevelController.Instance.Set();
+            UpPanelManager.Instance.Initialize();
             _deadPanel.SetActive(false);
             Set();
         }
 
 
-        private void OnFinishedSpin()
+        private void OnFinishedSpin(object sender, EventArgs eventArgs)
         {
             _currentWheelLevel++;
 
-            _wheelPanelTransform.DOAnchorPosY(-500, 1).OnComplete(WheelManager.Instance.SetNewWheel).SetDelay(1f)
-                .OnStart(WheelLevelController.Instance.LevelUp);
+            _wheelPanelTransform
+                .DOAnchorPosY(_wheelSettings.YPositionForOutOfSight, _wheelSettings.WheelReloadDuration / 2f)
+                .OnComplete(() =>
+                {
+                    WheelManager.Instance.SetNewWheel();
+                    UpPanelManager.Instance.LevelUp();
+                }).SetDelay(1f);
         }
     }
 }

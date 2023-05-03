@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 using UnityEngine.UI;
 
 
-namespace CardGame
+namespace CardGame.Tools
 {
     [RequireComponent(typeof(Image))]
     public class SpriteAssignerFromAtlas : MonoBehaviour

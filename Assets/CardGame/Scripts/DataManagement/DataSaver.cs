@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.RewardSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace CardGame.Management
+namespace CardGame.DataManagement
 {
     [RequireComponent(typeof(Button))]
     public class DataSaver : MonoBehaviour

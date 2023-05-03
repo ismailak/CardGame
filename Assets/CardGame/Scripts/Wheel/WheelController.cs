@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardGame.RewardSystem;
 using CardGame.Tools;
 using TMPro;
 using UnityEngine;
@@ -34,6 +35,8 @@ namespace CardGame.Wheel
 
         private void OnValidate()
         {
+            if(_currentWheelData == null) return;
+            
             SetSliceVisuals();
         }
 

@@ -14,8 +14,7 @@ namespace CardGame
         {
             GetComponent<Button>().onClick.AddListener(ResetGame);
         }
-
-
+        
         private void ResetGame()
         {
             GameManager.Instance.ResetGame();
